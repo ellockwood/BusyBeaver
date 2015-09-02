@@ -7,4 +7,4 @@ and has configurable rest times between steps making it practical for complex se
 
 Contributors Could:
 - Add GUI and modify "back-end" code to accomodate
-- Condense or clarify code with the end-goal being an easily undersandable and efficient program
+- Condense or clarify code with the end-goal being an easily understandable and efficient program
