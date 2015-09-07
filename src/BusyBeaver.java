@@ -2,17 +2,17 @@ import java.util.Scanner;
 import java.util.ArrayList;
 public class BusyBeaver {
 	//changed all booleans to primitive types to conserve memory
-	public static int loc=4, stateNum=1, countStep=0, restTime=575;
+	public static int locInTape=4, stateNum=1, countStep=0, restTime=575;
 	public static void main(String[] args) {
 		Scanner input = new Scanner(System.in);
 		System.out.println("Welcome to the Busy Beaver Game!");
 		System.out.println("State 0 is predefined as the halt state. Default rest time between steps is " + restTime + " milliseconds.");
 		System.out.println("-----------------------------------------------------------------------------------------------");
 		System.out.print("How many states to define? ");
-		int numStates = input.nextInt(); input.nextLine();
+		int numStates = Integer.parseInt(input.nextLine()); 
 		if(numStates>3){
 			System.out.print("Rest time between steps?(In milliseconds): ");
-			restTime = input.nextInt(); input.nextLine();
+			restTime = Integer.parseInt(input.nextLine());
 		}
 		int countOne = 0;
 		ArrayList<BState> stateList = new ArrayList<BState>();
@@ -48,14 +48,14 @@ public class BusyBeaver {
 		System.out.println("\t\t \t \t \t \t^");
 	};
 	public static void displayRefresh(ArrayList<Boolean> tapeList, Boolean displayCount){
-		if(loc<=3){
-			loc++;
+		if(locInTape<=3){
+			locInTape++;
 			tapeList.add(0, false);
 		}
-		if((loc+5)==tapeList.size()) tapeList.add(false);
+		if((locInTape+5)==tapeList.size()) tapeList.add(false);
 		System.out.print("\t\t");
 		for(int i=-4; i<5; i++){
-			if(tapeList.get(loc+i)==false)
+			if(tapeList.get(locInTape+i)==false)
 				System.out.print("0\t");
 			else System.out.print("1\t");
 		}
@@ -71,16 +71,16 @@ public class BusyBeaver {
 	};
 	public static boolean iterate(ArrayList<Boolean> tapeList, ArrayList<BState> stateList){
 		String inst;
-		if(tapeList.get(loc)==false) inst = stateList.get(stateNum).getB0();
+		if(tapeList.get(locInTape)==false) inst = stateList.get(stateNum).getB0();
 		else inst = stateList.get(stateNum).getB1();
-		if(inst.startsWith("0")&&(tapeList.get(loc)==true))
-			tapeList.set(loc, false);
-		else if(inst.startsWith("1")&&(tapeList.get(loc)==false))
-			tapeList.set(loc, true);
+		if(inst.startsWith("0")&&(tapeList.get(locInTape)==true))
+			tapeList.set(locInTape, false);
+		else if(inst.startsWith("1")&&(tapeList.get(locInTape)==false))
+			tapeList.set(locInTape, true);
 		displayRefresh(tapeList, false);
-		if(inst.charAt(1)=='0') loc--;
-		else loc++;
-		if(Integer.parseInt(inst.substring(2));==0) return false; //halt state, programs stop
+		if(inst.charAt(1)=='0') locInTape--;
+		else locInTape++;
+		if(Integer.parseInt(inst.substring(2))==0) return false; //halt state, programs stop
 		return true;// to be considered: returning card number
 	};
 }
