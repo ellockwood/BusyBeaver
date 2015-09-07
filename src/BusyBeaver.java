@@ -4,12 +4,13 @@ import javax.swing.JOptionPane;
 public class BusyBeaver {
 	//changed all booleans to primitive types to conserve memory
 	public static int locInTape=4, stateNum=1, countStep=0;
+	public static String strStates;
 	public static final int RESTTIME = 575;
+	
 	public static void main(String[] args) {
 		startProgramMessages();
 		Scanner input = new Scanner(System.in);
-		System.out.print("How many states to define? ");
-		int numStates = Integer.parseInt(input.nextLine()); 
+		int numStates = Integer.parseInt(strStates); 
 		/*if(numStates>3){
 			System.out.print("Rest time between steps?(In milliseconds): ");
 			RESTTIME = Integer.parseInt(input.nextLine());
@@ -79,22 +80,27 @@ public class BusyBeaver {
 		else if(inst.startsWith("1")&&(tapeList.get(locInTape)==false))
 			tapeList.set(locInTape, true);
 		displayRefresh(tapeList, false);
-		if(inst.charAt(1)=='0') locInTape--;
-		else locInTape++;
 		stateNum = Integer.parseInt(inst.substring(2)); //changing stateNum value every time
 		if(inst.charAt(1)=='0') locInTape--;
 		else locInTape++;
 		if(Integer.parseInt(inst.substring(2))==0) return false; //halt state, programs stop
 		return true;// to be considered: returning card number
 	}
+	/*
+	 * Method covers the introductory messages
+	 * and concludes with asking for total number of cards
+	 */
 	private static void startProgramMessages() {
 		//Strings to be printed out in the showMessageDialog boxes
 		String title = "Busy Beaver!";
 		String message1 = "Welcome to the Busy Beaver Game!";
-		String message2 = "State 0 is predefined as the halt state. Default rest time between steps is " + RESTTIME + " milliseconds.";
-		
+		String message2 = "State 0 is the \"Halt State\"";
+        String message3 = "Default rest time between steps is " + RESTTIME + " milliseconds.";
+		String message4 = "How many states to define?";
 		JOptionPane test = new JOptionPane("Busy Beaver Game", JOptionPane.PLAIN_MESSAGE);
 		JOptionPane.showMessageDialog(test, message1, title, JOptionPane.PLAIN_MESSAGE);
 		JOptionPane.showMessageDialog(test, message2, title, JOptionPane.PLAIN_MESSAGE);
+		JOptionPane.showMessageDialog(test, message3, title, JOptionPane.PLAIN_MESSAGE);
+		strStates = JOptionPane.showInputDialog(test, message4, title, JOptionPane.QUESTION_MESSAGE);
 	}
 }
