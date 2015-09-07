@@ -1,9 +1,11 @@
 import java.util.Scanner;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 public class BusyBeaver {
 	//changed all booleans to primitive types to conserve memory
 	public static int loc=4, stateNum=1, countStep=0, restTime=575;
 	public static void main(String[] args) {
+		startProgramMessages();
 		Scanner input = new Scanner(System.in);
 		System.out.println("Welcome to the Busy Beaver Game!");
 		System.out.println("State 0 is predefined as the halt state. Default rest time between steps is " + restTime + " milliseconds.");
@@ -46,7 +48,7 @@ public class BusyBeaver {
 	}
 	public static void displayArrow(){
 		System.out.println("\t\t \t \t \t \t^");
-	};
+	}
 	public static void displayRefresh(ArrayList<Boolean> tapeList, Boolean displayCount){
 		if(loc<=3){
 			loc++;
@@ -68,7 +70,7 @@ public class BusyBeaver {
 		catch(Exception e){
 			e.printStackTrace();
 		}
-	};
+	}
 	public static boolean iterate(ArrayList<Boolean> tapeList, ArrayList<BState> stateList){
 		String inst;
 		if(tapeList.get(loc)==false) inst = stateList.get(stateNum).getB0();
@@ -80,7 +82,17 @@ public class BusyBeaver {
 		displayRefresh(tapeList, false);
 		if(inst.charAt(1)=='0') loc--;
 		else loc++;
-		if(Integer.parseInt(inst.substring(2));==0) return false; //halt state, programs stop
+		if(Integer.parseInt(inst.substring(2))==0) return false; //halt state, programs stop
 		return true;// to be considered: returning card number
-	};
+	}
+	private static void startProgramMessages() {
+		//Strings to be printed out in the showMessageDialog boxes
+		String title = "Busy Beaver!";
+		String message1 = "Welcome to the Busy Beaver Game!";
+		String message2 = "State 0 is predefined as the halt state. Default rest time between steps is " + restTime + " milliseconds.";
+		
+		JOptionPane test = new JOptionPane("Busy Beaver Game", JOptionPane.PLAIN_MESSAGE);
+		JOptionPane.showMessageDialog(test, message1, title, JOptionPane.PLAIN_MESSAGE);
+		JOptionPane.showMessageDialog(test, message2, title, JOptionPane.PLAIN_MESSAGE);
+	}
 }
