@@ -8,9 +8,6 @@ public class BusyBeaver {
 	public static void main(String[] args) {
 		startProgramMessages();
 		Scanner input = new Scanner(System.in);
-		System.out.println("Welcome to the Busy Beaver Game!");
-		System.out.println("State 0 is predefined as the halt state. Default rest time between steps is " + RESTTIME + " milliseconds.");
-		System.out.println("-----------------------------------------------------------------------------------------------");
 		System.out.print("How many states to define? ");
 		int numStates = Integer.parseInt(input.nextLine()); 
 		/*if(numStates>3){
