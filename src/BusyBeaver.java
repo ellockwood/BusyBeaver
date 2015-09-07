@@ -81,8 +81,6 @@ public class BusyBeaver {
 			tapeList.set(locInTape, true);
 		displayRefresh(tapeList, false);
 		stateNum = Integer.parseInt(inst.substring(2)); //changing stateNum value every time
-		if(inst.charAt(1)=='0') locInTape--;
-		else locInTape++;
 		if(Integer.parseInt(inst.substring(2))==0) return false; //halt state, programs stop
 		return true;// to be considered: returning card number
 	}
