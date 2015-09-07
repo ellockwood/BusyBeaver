@@ -2,18 +2,19 @@ import java.util.Scanner;
 import java.util.ArrayList;
 public class BusyBeaver {
 	//changed all booleans to primitive types to conserve memory
-	public static int locInTape=4, stateNum=1, countStep=0, restTime=575;
+	public static int locInTape=4, stateNum=1, countStep=0;
+	public static final int RESTTIME = 575;
 	public static void main(String[] args) {
 		Scanner input = new Scanner(System.in);
 		System.out.println("Welcome to the Busy Beaver Game!");
-		System.out.println("State 0 is predefined as the halt state. Default rest time between steps is " + restTime + " milliseconds.");
+		System.out.println("State 0 is predefined as the halt state. Default rest time between steps is " + RESTTIME + " milliseconds.");
 		System.out.println("-----------------------------------------------------------------------------------------------");
 		System.out.print("How many states to define? ");
 		int numStates = Integer.parseInt(input.nextLine()); 
-		if(numStates>3){
+		/*if(numStates>3){
 			System.out.print("Rest time between steps?(In milliseconds): ");
-			restTime = Integer.parseInt(input.nextLine());
-		}
+			RESTTIME = Integer.parseInt(input.nextLine());
+		}*/
 		int countOne = 0;
 		ArrayList<BState> stateList = new ArrayList<BState>();
 		System.out.println("Define each state...");
@@ -52,6 +53,7 @@ public class BusyBeaver {
 			locInTape++;
 			tapeList.add(0, false);
 		}
+		//System.out.println(tapeList.size());
 		if((locInTape+5)==tapeList.size()) tapeList.add(false);
 		System.out.print("\t\t");
 		for(int i=-4; i<5; i++){
@@ -63,7 +65,7 @@ public class BusyBeaver {
 		System.out.println();
 		displayArrow();
 		try{
-			Thread.sleep(restTime);
+			Thread.sleep(RESTTIME);
 		}
 		catch(Exception e){
 			e.printStackTrace();
@@ -78,6 +80,7 @@ public class BusyBeaver {
 		else if(inst.startsWith("1")&&(tapeList.get(locInTape)==false))
 			tapeList.set(locInTape, true);
 		displayRefresh(tapeList, false);
+		stateNum = Integer.parseInt(inst.substring(2)); //changing stateNum value every time
 		if(inst.charAt(1)=='0') locInTape--;
 		else locInTape++;
 		if(Integer.parseInt(inst.substring(2))==0) return false; //halt state, programs stop
