@@ -1,35 +1,32 @@
 import java.util.Scanner;
+import java.awt.Dimension;
 import java.util.ArrayList;
+
 import javax.swing.JOptionPane;
-public class BusyBeaver {
-	//changed all booleans to primitive types to conserve memory
-	public static int locInTape=4, stateNum=1, countStep=0;
+import javax.swing.JPanel;
+
+public class BusyBeaver extends JPanel{
+	private static final long serialVersionUID = 1L; //Default Serial
+	/*
+	 * locInTape - Location in the tape where there are 4 spaces below and 4 above?
+	 * stateNum  - The stateNumber currently in
+	 * countStep - Current count of the step
+	 * numStates - Number of states defined
+	 */
+	private int locInTape=4, stateNum=1, countStep=0, numStates = 0;
+	//String representation of number of states to define
 	public static String strStates;
+	//Final value of rest-time between steps
 	public static final int RESTTIME = 575;
 	
-	public static void main(String[] args) {
-		startProgramMessages();
-		Scanner input = new Scanner(System.in);
-		int numStates = Integer.parseInt(strStates); 
-		/*if(numStates>3){
-			System.out.print("Rest time between steps?(In milliseconds): ");
-			RESTTIME = Integer.parseInt(input.nextLine());
-		}*/
-		int countOne = 0;
-		ArrayList<BState> stateList = new ArrayList<BState>();
-		System.out.println("Define each state...");
-		//changed from 0th index to no specified index
-		stateList.add(null);
-		//numstates is first input
-		for(int i=0; i<numStates; i++){
-			System.out.print("Define state " + (i+1) + ":\n0 behavior: ");
-			String b0 = new String(input.nextLine());
-			System.out.print("1 behavior: ");
-			String b1 = new String(input.nextLine());
-			stateList.add(new BState(b0, b1));
-		}
-		System.out.println("DISPLAY SPACE BELOW..."); try{Thread.sleep(250);}catch(Exception e){e.printStackTrace();}
-		System.out.println("-----------------------"); try{Thread.sleep(275);}catch(Exception e){e.printStackTrace();}
+	public BusyBeaver(Dimension d) {
+    	//sets the size of the panel
+    	setSize(d);
+    	startProgramMessages();
+    	numStates = Integer.parseInt(strStates);
+    	int countOne = 0;
+		ArrayList<BState> stateList = askDefineStates();
+		
 		ArrayList<Boolean> tapeList = new ArrayList<Boolean>();
 		for(int i=0; i<9; i++){
 			tapeList.add(false);
@@ -42,14 +39,15 @@ public class BusyBeaver {
 		for(Boolean place : tapeList){
 			if(place==true) countOne++;
 		}
-		input.close();
 		System.out.println("Your set achieved " + countOne + " \"1's\" in " + countStep + " steps.");
 	}
-	public static void displayArrow(){
+	
+	private void displayArrow(){
 		System.out.println("\t\t \t \t \t \t^");
 	}
-	public static void displayRefresh(ArrayList<Boolean> tapeList, Boolean displayCount){
-		if(locInTape<=3){
+	
+	private void displayRefresh(ArrayList<Boolean> tapeList, Boolean displayCount){
+		if(locInTape<=3) {
 			locInTape++;
 			tapeList.add(0, false);
 		}
@@ -70,8 +68,9 @@ public class BusyBeaver {
 		catch(Exception e){
 			e.printStackTrace();
 		}
-	}
-	public static boolean iterate(ArrayList<Boolean> tapeList, ArrayList<BState> stateList){
+    }
+	
+	private boolean iterate(ArrayList<Boolean> tapeList, ArrayList<BState> stateList){
 		String inst;
 		if(tapeList.get(locInTape)==false) inst = stateList.get(stateNum).getB0();
 		else inst = stateList.get(stateNum).getB1();
@@ -84,21 +83,44 @@ public class BusyBeaver {
 		if(Integer.parseInt(inst.substring(2))==0) return false; //halt state, programs stop
 		return true;// to be considered: returning card number
 	}
-	/*
+	
+    /*
 	 * Method covers the introductory messages
 	 * and concludes with asking for total number of cards
 	 */
-	private static void startProgramMessages() {
+	private void startProgramMessages() {
 		//Strings to be printed out in the showMessageDialog boxes
 		String title = "Busy Beaver!";
 		String message1 = "Welcome to the Busy Beaver Game!";
 		String message2 = "State 0 is the \"Halt State\"";
-        String message3 = "Default rest time between steps is " + RESTTIME + " milliseconds.";
+        String message3 = "Default rest time between steps is " + BusyBeaver.RESTTIME + " milliseconds.";
 		String message4 = "How many states to define?";
 		JOptionPane test = new JOptionPane("Busy Beaver Game", JOptionPane.PLAIN_MESSAGE);
 		JOptionPane.showMessageDialog(test, message1, title, JOptionPane.PLAIN_MESSAGE);
 		JOptionPane.showMessageDialog(test, message2, title, JOptionPane.PLAIN_MESSAGE);
 		JOptionPane.showMessageDialog(test, message3, title, JOptionPane.PLAIN_MESSAGE);
 		strStates = JOptionPane.showInputDialog(test, message4, title, JOptionPane.QUESTION_MESSAGE);
+	}
+	
+	/*
+	 * Method covers the defining of states by the user
+	 */
+	private ArrayList<BState> askDefineStates() {
+		ArrayList<BState> stateList = new ArrayList<BState>();
+		String title = "Busy Beaver!";
+		String prompt = "Define each state: ";
+		String variable0Input = ""; //String representing the prompt for ith 0 behavior
+		String variable1Input = ""; //String representing the prompt for ith 1 behavior
+		JOptionPane test = new JOptionPane("Busy Beaver Game", JOptionPane.PLAIN_MESSAGE);
+		JOptionPane.showMessageDialog(test, prompt, title, JOptionPane.PLAIN_MESSAGE);
+		
+		for(int i=0; i<numStates; i++){
+			variable0Input = "Define state: " + i + "'s 0 behavior";
+			variable1Input = "Define state: " + i + "'s 1 behavior";
+			String b0 = JOptionPane.showInputDialog(test, variable0Input, title, JOptionPane.QUESTION_MESSAGE);
+			String b1 = JOptionPane.showInputDialog(test, variable1Input, title, JOptionPane.QUESTION_MESSAGE);
+			stateList.add(new BState(b0, b1));
+		}
+		return stateList;
 	}
 }

@@ -1,8 +1,8 @@
 
 public class BState {
-	//making private due to accessor methods
 	private String b0;
 	private String b1;
+	
 	public BState(String inB0, String inB1){
 		b0 = inB0;
 		b1 = inB1;
