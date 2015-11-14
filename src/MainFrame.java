@@ -10,13 +10,12 @@ public class MainFrame
 		Toolkit toolkit = Toolkit.getDefaultToolkit(); //Gets the default toolkit
 		
 		Dimension scrnsize = toolkit.getScreenSize(); // Get the current screen size
-		Dimension panelD = new Dimension((int)scrnsize.getWidth()/3, (int)scrnsize.getHeight()/3);
 		
         JFrame frame = new JFrame();
-        frame.setSize((int)scrnsize.getWidth()/3, (int)scrnsize.getHeight()/3);
+        frame.setSize(scrnsize);
         
         Container cont = frame.getContentPane();
-        BusyBeaver panel = new BusyBeaver(panelD);
+        BusyBeaver panel = new BusyBeaver(scrnsize);
         cont.add(panel); //Adds a panel the size of the screen
         
         frame.setVisible(true);
