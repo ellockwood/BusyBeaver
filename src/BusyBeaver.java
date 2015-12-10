@@ -1,4 +1,3 @@
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -12,7 +11,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import org.imgscalr.Scalr;
-import static org.imgscalr.Scalr.*;
 
 public class BusyBeaver extends JPanel{
 	private static final long serialVersionUID = 1L; //Default Serial
