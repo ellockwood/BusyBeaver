@@ -70,18 +70,18 @@ public class BusyBeaver extends JPanel{
 	  */
 	 private void loadImages() {
 		 try {
-	 		    beaver = ImageIO.read(new File("beaver.png"));
+	 		    beaver = ImageIO.read(new File("res/beaver.png"));
 	 		} catch (IOException e) {
 	 			System.out.println("Error loading image");
 	 		}
 	 		try {
-	 		    zero = ImageIO.read(new File("zero.png"));
+	 		    zero = ImageIO.read(new File("res/zero.png"));
 	 		    zero = Scalr.resize(zero, beaver.getWidth()/5, beaver.getHeight()/5);
 	 		} catch (IOException e) {
 	 			System.out.println("Error loading image");
 	 		}
 	 		try {
-	 		    one = ImageIO.read(new File("one.png"));
+	 		    one = ImageIO.read(new File("res/one.png"));
 	 		    one = Scalr.resize(one, beaver.getWidth()/5, beaver.getHeight()/5);
 	 		} catch (IOException e) {
 	 			System.out.println("Error loading image");
